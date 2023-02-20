@@ -9,6 +9,7 @@ function checkStrLength (string, countSymbols) {
 }
 
 checkStrLength('проверяемая строка', 20);
+
 /**
  * Checking string for palinrome
  * @param {*string} Input string
