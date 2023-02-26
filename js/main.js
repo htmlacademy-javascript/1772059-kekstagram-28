@@ -1,8 +1,29 @@
 const NAMES = [
-  'Dustin Chambers', 'James Graves', 'William Terry', 'Crystal Smith', 'Katherine Bailey', 'Deborah Butler','Virginia Guzman',
-  'Helen Day', 'Duane Jones','Eugene Johnson','Antonio King','Wendy Sullivan','Lena Evans','Bobbie Bowen','Mary Johnson',
-  'Joan Jones','Rachel Graham','Sandra Brown','Jennifer Morris','Vivian Clark','Beatrice Jackson','James Scott','Julie Wilson',
-  'Elsie Sanchez','James Hicks'
+  'Dustin Chambers',
+  'James Graves',
+  'William Terry',
+  'Crystal Smith',
+  'Katherine Bailey',
+  'Deborah Butler',
+  'Virginia Guzman',
+  'Helen Day',
+  'Duane Jones',
+  'Eugene Johnson',
+  'Antonio King',
+  'Wendy Sullivan',
+  'Lena Evans',
+  'Bobbie Bowen',
+  'Mary Johnson',
+  'Joan Jones',
+  'Rachel Graham',
+  'Sandra Brown',
+  'Jennifer Morris',
+  'Vivian Clark',
+  'Beatrice Jackson',
+  'James Scott',
+  'Julie Wilson',
+  'Elsie Sanchez',
+  'James Hicks',
 ];
 
 const MESSAGES = [
@@ -21,50 +42,73 @@ const DESCRIPTIONS = [
   'How\'s it?',
   'Good light',
   'What\'s up, gays?',
-  'I just like smth nature'
+  'I just like smth nature',
 ];
 
+const countPhotosID = generateID();
+const countUsersID = generateID();
+const countPhotos = generateID();
 
-function getRandomPositiveInteger (a, b) {
+// eslint-disable-next-line no-unused-vars
+const createPhotoGallery = Array.from({ length: 25 }, createPhoto);
+
+/**
+ * This function gets range of numbers and returns random value
+ * @param {*number} beginning of the range
+ * @param {*number} end of the range
+ * @returns random number in specified range
+ */
+function getRandomPositiveInteger(a, b) {
   const lower = Math.ceil(Math.min(Math.abs(a), Math.abs(b)));
   const upper = Math.floor(Math.max(Math.abs(a), Math.abs(b)));
   const result = Math.random() * (upper - lower + 1) + lower;
   return Math.floor(result);
 }
 
-function getRandomArrayElement (elements) {
+/**
+ * This function gets array and return random element of one
+ * @param {*array} array of ellements
+ * @returns random element of the array
+ */
+function getRandomArrayElement(elements) {
   return elements[getRandomPositiveInteger(0, elements.length - 1)];
 }
 
-function createPhoto () {
+/**
+ * Generate serial counter for every generated object instance
+ * @returns number
+ */
+function generateID () {
+  let counter = 0;
+  return function () {
+    ++counter;
+    return counter;
+  };
+}
 
-  function* createID () {
-    let i = 0;
-    while(true) {
-      yield i++;
-    }
-  }
-
-  let idNumber = createID();
-
+/**
+ * Creation photo gallery
+ * @returns odject with certain params
+ */
+function createPhoto() {
   return {
-    id: idNumber.next().value,
-    url: `./photos/${getRandomPositiveInteger(0, 25)}.jpg`,
+    id: countPhotosID(),
+    url: `./photos/${countPhotos()}.jpg`,
     description: getRandomArrayElement(DESCRIPTIONS),
     likes: getRandomPositiveInteger(125, 500),
     comments: createUser(),
   };
 }
 
-function createUser () {
-
+/**
+ * Creation people who comments photos
+ * @returns object woth certain params
+ */
+function createUser() {
   return {
-    id: '',
+    id: countUsersID(),
     avatar: `./img/avatar-${getRandomPositiveInteger(0, 6)}.svg`,
     message: getRandomArrayElement(MESSAGES),
     name: getRandomArrayElement(NAMES),
   };
 }
-
-const similarPhoto = Array.from({length: 4}, createPhoto);
-console.log(similarPhoto);
