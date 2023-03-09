@@ -1,4 +1,1 @@
-import { createPhotoGallery } from './data.js';
-
-// eslint-disable-next-line no-console
-console.log(createPhotoGallery);
+import './pictures.js';
