@@ -1,10 +1,11 @@
 import { createPhotoGallery } from './data.js';
 
-const pictures = document.querySelector('.pictures');
+const picturesGrid = document.querySelector('.pictures');
 const pictureTemplate = document.querySelector('#picture').content;
 const pictureInfo = pictureTemplate.querySelector('.picture__info');
 
 const similarPictures = createPhotoGallery();
+const picturesGridFragment = document.createDocumentFragment();
 
 similarPictures.forEach((picture) => {
   const userPicture = pictureTemplate.cloneNode(true);
@@ -13,5 +14,7 @@ similarPictures.forEach((picture) => {
   userPicture.querySelector('.picture__img').src = picture.url;
   pictureComments.textContent = picture.id;
   pictureLikes.textContent = picture.likes;
-  pictures.append(userPicture);
+  picturesGridFragment.append(userPicture);
 });
+
+picturesGrid.append(picturesGridFragment);
