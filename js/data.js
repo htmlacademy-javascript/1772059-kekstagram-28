@@ -47,6 +47,8 @@ const DESCRIPTIONS = [
   'I just like smth nature',
 ];
 
+const COUNT_PICTURES = 25;
+
 const countPhotosID = generateID();
 const countUsersID = generateID();
 const countPhotos = generateID();
@@ -70,6 +72,6 @@ function createUser() {
   };
 }
 
-const createPhotoGallery = Array.from({ length: 25 }, createPhoto);
+const createPhotoGallery = () => Array.from({ length: COUNT_PICTURES }, createPhoto);
 
 export {createPhotoGallery};
