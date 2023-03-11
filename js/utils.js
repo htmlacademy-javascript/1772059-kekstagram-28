@@ -18,4 +18,7 @@ function generateID () {
   };
 }
 
-export {getRandomArrayElement, generateID, getRandomPositiveInteger};
+const isEscapeKey = (evt) => evt.key === 'Escape';
+const isEnterKey = (evt) => evt.key === 'Enter';
+
+export {getRandomArrayElement, generateID, getRandomPositiveInteger, isEscapeKey, isEnterKey};

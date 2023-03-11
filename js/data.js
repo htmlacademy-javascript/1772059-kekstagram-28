@@ -72,6 +72,9 @@ function createUser() {
   };
 }
 
+
+
+
 const createPhotoGallery = () => Array.from({ length: COUNT_PICTURES }, createPhoto);
 
 export {createPhotoGallery};
