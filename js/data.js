@@ -60,20 +60,19 @@ function createPhoto() {
     description: getRandomArrayElement(DESCRIPTIONS),
     likes: getRandomPositiveInteger(125, 500),
     comments: createUser(),
+    // comments: Array.from({ length: getRandomPositiveInteger(1, 6)}, createUser),
   };
 }
+
 
 function createUser() {
   return {
     id: countUsersID(),
-    avatar: `./img/avatar-${getRandomPositiveInteger(0, 6)}.svg`,
+    avatar: `./img/avatar-${getRandomPositiveInteger(1, 6)}.svg`,
     message: getRandomArrayElement(MESSAGES),
     name: getRandomArrayElement(NAMES),
   };
 }
-
-
-
 
 const createPhotoGallery = () => Array.from({ length: COUNT_PICTURES }, createPhoto);
 
