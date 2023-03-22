@@ -48,32 +48,31 @@ const DESCRIPTIONS = [
 ];
 
 const COUNT_PICTURES = 25;
-
 const countPhotosID = generateID();
 const countUsersID = generateID();
 const countPhotos = generateID();
 
-function createPhoto() {
+function createPost () {
   return {
     id: countPhotosID(),
     url: `./photos/${countPhotos()}.jpg`,
     description: getRandomArrayElement(DESCRIPTIONS),
     likes: getRandomPositiveInteger(125, 500),
-    comments: createUser(),
-    // comments: Array.from({ length: getRandomPositiveInteger(1, 6)}, createUser),
+    comments: Array.from({length: getRandomPositiveInteger(0, 6)}, createComments),
   };
 }
 
-
-function createUser() {
+function createComments () {
   return {
     id: countUsersID(),
-    avatar: `./img/avatar-${getRandomPositiveInteger(1, 6)}.svg`,
+    avatar: `./img/avatar-${getRandomPositiveInteger(0, 6)}.svg`,
     message: getRandomArrayElement(MESSAGES),
     name: getRandomArrayElement(NAMES),
   };
 }
 
-const createPhotoGallery = () => Array.from({ length: COUNT_PICTURES }, createPhoto);
+function getPhotoGallery () {
+  return Array.from({ length: COUNT_PICTURES }, createPost);
+}
 
-export {createPhotoGallery};
+export { getPhotoGallery };
