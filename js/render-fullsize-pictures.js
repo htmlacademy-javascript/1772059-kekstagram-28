@@ -1,16 +1,22 @@
 import { isEscapeKey } from './utils.js';
+import { getComments } from './data.js';
 
 const fullSizePicture = document.querySelector('.big-picture');
 const body = document.querySelector('body');
-const socialCommentsCount = fullSizePicture.querySelector('.social__comment-count');
-const commentsLoader = fullSizePicture.querySelector('.comments-loader');
 const cancelButton = fullSizePicture.querySelector('#picture-cancel');
 
-// переименовать переменные, добавить element-
 const imgElement = fullSizePicture.querySelector('.big-picture__img img');
 const likesElement = fullSizePicture.querySelector('.likes-count');
 const commentsCountElement = fullSizePicture.querySelector('.comments-count');
 const descriptionElement = fullSizePicture.querySelector('.social__caption');
+
+const commentsLoader = fullSizePicture.querySelector('.comments-loader');
+const socialCommentsCount = fullSizePicture.querySelector('.social__comment-count');
+const commentsList = fullSizePicture.querySelector('.social__comments');
+const COMMENTS_FOR_LOADER = 5;
+
+let totalNumberOfComments = 0;
+let postComments = [];
 
 
 function popupEscKeyDownHandler (evt) {
@@ -39,8 +45,6 @@ function onCancelButtonDown () {
 function openFullSizePicture() {
   fullSizePicture.classList.remove('hidden');
   body.classList.add('modal-open');
-  socialCommentsCount.classList.add('hidden'); //delete
-  commentsLoader.classList.add('hidden'); // delete
 
   onCancelButtonDown();
   onPopupEscKeyDown();
@@ -54,6 +58,53 @@ function closeFullSizePicture () {
   document.removeEventListener('keydown', popupEscKeyDownHandler);
 }
 
+function createElement (tagName, className, text) {
+  const element = document.createElement(tagName);
+  element.classList.add(className);
+  if(text) {
+    element.textContent = text;
+  }
+  return element;
+}
+
+function createComment ({avatar, name, message}) {
+  const socialComment = createElement('li', 'social__comment');
+  const socialPicture = createElement('img', 'social__picture');
+  socialPicture.src = avatar;
+  socialPicture.alt = name;
+  socialComment.appendChild(socialPicture);
+  const socialText = createElement('p', 'social__text', message);
+  socialComment.appendChild(socialText);
+
+  return socialComment;
+}
+
+function loadComments () {
+  totalNumberOfComments += COMMENTS_FOR_LOADER;
+  if(totalNumberOfComments >= postComments.length) {
+    commentsLoader.classList.add('hidden');
+    totalNumberOfComments = postComments.length;
+  } else {
+    commentsLoader.classList.remove('hidden');
+  }
+
+  const commentFragment = document.createDocumentFragment();
+  for(let i = 0; i < totalNumberOfComments; i++) {
+    const commentElement = createComment(getComments[i]);
+    commentFragment.append(commentElement);
+  }
+
+  commentsList.innerHTML = '';
+  commentsList.append(commentFragment);
+  socialCommentsCount.innerHTML = `
+    ${totalNumberOfComments} из <span class="comments-count">${postComments.length}</span> комментариев
+  `;
+}
+
+function onCommentsLoader () {
+  commentsLoader.addEventListener('click', loadComments);
+}
+
 function renderFullSizePicture (userPost) {
   const {url, comments, alt, likes, description} = userPost;
   openFullSizePicture();
@@ -65,6 +116,7 @@ function renderFullSizePicture (userPost) {
   descriptionElement.textContent = description;
   onPopupEscKeyDown();
   onCancelButtonDown();
+  onCommentsLoader();
 }
 
 export {renderFullSizePicture};

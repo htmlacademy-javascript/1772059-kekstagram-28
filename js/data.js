@@ -48,6 +48,7 @@ const DESCRIPTIONS = [
 ];
 
 const COUNT_PICTURES = 25;
+const COUNT_COMMENTS = 20;
 const countPhotosID = generateID();
 const countUsersID = generateID();
 const countPhotos = generateID();
@@ -58,7 +59,7 @@ function createPost () {
     url: `./photos/${countPhotos()}.jpg`,
     description: getRandomArrayElement(DESCRIPTIONS),
     likes: getRandomPositiveInteger(125, 500),
-    comments: Array.from({length: getRandomPositiveInteger(0, 6)}, createComments),
+    comments: Array.from({length: getRandomPositiveInteger(1, 20)}, createComments),
   };
 }
 
@@ -71,8 +72,12 @@ function createComments () {
   };
 }
 
+function getComments () {
+  return Array.from({length: COUNT_COMMENTS}, createComments);
+}
+
 function getPhotoGallery () {
   return Array.from({ length: COUNT_PICTURES }, createPost);
 }
 
-export { getPhotoGallery };
+export { getPhotoGallery, getComments };
