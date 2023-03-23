@@ -67,7 +67,7 @@ function createElement (tagName, className, text) {
   return element;
 }
 
-function createComment ({avatar, name, message}) {
+function createComment ({avatar, message, name}) {
   const socialComment = createElement('li', 'social__comment');
   const socialPicture = createElement('img', 'social__picture');
   socialPicture.src = avatar;
@@ -79,25 +79,31 @@ function createComment ({avatar, name, message}) {
   return socialComment;
 }
 
-function loadComments () {
+function loadComments () { // мне нужно передать в эту функцию comments, чтобы считывать с этой коллекции данные
+
+ // const comments = 20;
+
   totalNumberOfComments += COMMENTS_FOR_LOADER;
-  if(totalNumberOfComments >= postComments.length) {
+  if(totalNumberOfComments >= comments.length) {
     commentsLoader.classList.add('hidden');
-    totalNumberOfComments = postComments.length;
+    totalNumberOfComments = comments.length;
   } else {
     commentsLoader.classList.remove('hidden');
   }
 
+  console.log('click');
+
   const commentFragment = document.createDocumentFragment();
   for(let i = 0; i < totalNumberOfComments; i++) {
-    const commentElement = createComment(getComments[i]);
+    console.log(comments[i]);
+    const commentElement = createComment(getComments()[i]); // тут
     commentFragment.append(commentElement);
   }
 
   commentsList.innerHTML = '';
   commentsList.append(commentFragment);
   socialCommentsCount.innerHTML = `
-    ${totalNumberOfComments} из <span class="comments-count">${postComments.length}</span> комментариев
+    ${totalNumberOfComments} из <span class="comments-count">${comments.length}</span> комментариев
   `;
 }
 
@@ -114,6 +120,7 @@ function renderFullSizePicture (userPost) {
   likesElement.textContent = likes;
   commentsCountElement.textContent = comments.length;
   descriptionElement.textContent = description;
+
   onPopupEscKeyDown();
   onCancelButtonDown();
   onCommentsLoader();
