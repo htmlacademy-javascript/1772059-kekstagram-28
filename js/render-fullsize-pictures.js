@@ -14,9 +14,7 @@ const commentsLoader = fullSizePicture.querySelector('.comments-loader');
 const socialCommentsCount = fullSizePicture.querySelector('.social__comment-count');
 const commentsList = fullSizePicture.querySelector('.social__comments');
 const COMMENTS_FOR_LOADER = 5;
-
 let totalNumberOfComments = 0;
-let postComments = [];
 
 
 function popupEscKeyDownHandler (evt) {
@@ -79,9 +77,7 @@ function createComment ({avatar, message, name}) {
   return socialComment;
 }
 
-function loadComments () { // мне нужно передать в эту функцию comments, чтобы считывать с этой коллекции данные
-
- // const comments = 20;
+function loadComments (comments) {
 
   totalNumberOfComments += COMMENTS_FOR_LOADER;
   if(totalNumberOfComments >= comments.length) {
@@ -91,11 +87,8 @@ function loadComments () { // мне нужно передать в эту фу�
     commentsLoader.classList.remove('hidden');
   }
 
-  console.log('click');
-
   const commentFragment = document.createDocumentFragment();
   for(let i = 0; i < totalNumberOfComments; i++) {
-    console.log(comments[i]);
     const commentElement = createComment(getComments()[i]); // тут
     commentFragment.append(commentElement);
   }
@@ -107,8 +100,8 @@ function loadComments () { // мне нужно передать в эту фу�
   `;
 }
 
-function onCommentsLoader () {
-  commentsLoader.addEventListener('click', loadComments);
+function onCommentsLoader (comments) {
+  commentsLoader.addEventListener('click', () => loadComments(comments));
 }
 
 function renderFullSizePicture (userPost) {
@@ -123,7 +116,7 @@ function renderFullSizePicture (userPost) {
 
   onPopupEscKeyDown();
   onCancelButtonDown();
-  onCommentsLoader();
+  onCommentsLoader(comments);
 }
 
 export {renderFullSizePicture};
