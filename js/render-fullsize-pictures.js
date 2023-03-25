@@ -13,9 +13,10 @@ const descriptionElement = fullSizePicture.querySelector('.social__caption');
 const commentsLoader = fullSizePicture.querySelector('.comments-loader');
 const socialCommentsCount = fullSizePicture.querySelector('.social__comment-count');
 const commentsList = fullSizePicture.querySelector('.social__comments');
+
 const COMMENTS_FOR_LOADER = 5;
 let totalNumberOfComments = 0;
-
+let commentsContainer = [];
 
 function popupEscKeyDownHandler (evt) {
   if(isEscapeKey(evt)) {
@@ -44,6 +45,10 @@ function openFullSizePicture() {
   fullSizePicture.classList.remove('hidden');
   body.classList.add('modal-open');
 
+  while(commentsList.firstChild) {
+    commentsList.removeChild(commentsList.firstChild);
+  }
+
   onCancelButtonDown();
   onPopupEscKeyDown();
 }
@@ -54,6 +59,7 @@ function closeFullSizePicture () {
 
   cancelButton.removeEventListener('click', onCancelButtonDown);
   document.removeEventListener('keydown', popupEscKeyDownHandler);
+  commentsLoader.removeEventListener('click', loadComments);
 }
 
 function createElement (tagName, className, text) {
@@ -89,16 +95,17 @@ function loadComments (comments) {
 
   const commentFragment = document.createDocumentFragment();
   for(let i = 0; i < totalNumberOfComments; i++) {
-    const commentElement = createComment(getComments()[i]); // тут
+    const commentElement = createComment(comments[i]);
     commentFragment.append(commentElement);
   }
 
   commentsList.innerHTML = '';
   commentsList.append(commentFragment);
   socialCommentsCount.innerHTML = `
-    ${totalNumberOfComments} из <span class="comments-count">${comments.length}</span> комментариев
+    ${totalNumberOfComments} из <span class="comments-count">${commentsContainer.length}</span> комментариев
   `;
 }
+
 
 function onCommentsLoader (comments) {
   commentsLoader.addEventListener('click', () => loadComments(comments));
@@ -113,10 +120,13 @@ function renderFullSizePicture (userPost) {
   likesElement.textContent = likes;
   commentsCountElement.textContent = comments.length;
   descriptionElement.textContent = description;
+  commentsContainer = comments;
+
+  loadComments(commentsContainer);
+  onCommentsLoader(commentsContainer);
 
   onPopupEscKeyDown();
   onCancelButtonDown();
-  onCommentsLoader(comments);
 }
 
 export {renderFullSizePicture};

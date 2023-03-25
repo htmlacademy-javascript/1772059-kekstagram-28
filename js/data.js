@@ -66,7 +66,7 @@ function createPost () {
 function createComments () {
   return {
     id: countUsersID(),
-    avatar: `./img/avatar-${getRandomPositiveInteger(0, 6)}.svg`,
+    avatar: `./img/avatar-${getRandomPositiveInteger(1, 6)}.svg`,
     message: getRandomArrayElement(MESSAGES),
     name: getRandomArrayElement(NAMES),
   };
