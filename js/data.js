@@ -48,7 +48,6 @@ const DESCRIPTIONS = [
 ];
 
 const COUNT_PICTURES = 25;
-const COUNT_COMMENTS = 20;
 const countPhotosID = generateID();
 const countUsersID = generateID();
 const countPhotos = generateID();
