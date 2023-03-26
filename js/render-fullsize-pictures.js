@@ -106,7 +106,6 @@ function loadComments (comments) {
   `;
 }
 
-
 function onCommentsLoader (comments) {
   commentsLoader.addEventListener('click', () => loadComments(comments));
 }
