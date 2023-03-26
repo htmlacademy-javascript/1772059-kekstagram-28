@@ -80,4 +80,4 @@ function getPhotoGallery () {
   return Array.from({ length: COUNT_PICTURES }, createPost);
 }
 
-export { getPhotoGallery, getComments };
+export { getPhotoGallery };

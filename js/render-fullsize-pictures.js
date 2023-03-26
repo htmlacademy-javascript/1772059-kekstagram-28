@@ -1,5 +1,4 @@
 import { isEscapeKey } from './utils.js';
-import { getComments } from './data.js';
 
 const fullSizePicture = document.querySelector('.big-picture');
 const body = document.querySelector('body');
@@ -60,6 +59,7 @@ function closeFullSizePicture () {
   cancelButton.removeEventListener('click', onCancelButtonDown);
   document.removeEventListener('keydown', popupEscKeyDownHandler);
   commentsLoader.removeEventListener('click', loadComments);
+  totalNumberOfComments = 0;
 }
 
 function createElement (tagName, className, text) {
