@@ -83,19 +83,19 @@ function createComment ({avatar, message, name}) {
   return socialComment;
 }
 
-function loadComments (comments) {
+function loadComments () {
 
   totalNumberOfComments += COMMENTS_FOR_LOADER;
-  if(totalNumberOfComments >= comments.length) {
+  if(totalNumberOfComments >= commentsContainer.length) {
     commentsLoader.classList.add('hidden');
-    totalNumberOfComments = comments.length;
+    totalNumberOfComments = commentsContainer.length;
   } else {
     commentsLoader.classList.remove('hidden');
   }
 
   const commentFragment = document.createDocumentFragment();
   for(let i = 0; i < totalNumberOfComments; i++) {
-    const commentElement = createComment(comments[i]);
+    const commentElement = createComment(commentsContainer[i]);
     commentFragment.append(commentElement);
   }
 
@@ -106,8 +106,8 @@ function loadComments (comments) {
   `;
 }
 
-function onCommentsLoader (comments) {
-  commentsLoader.addEventListener('click', () => loadComments(comments));
+function onCommentsLoader () {
+  commentsLoader.addEventListener('click', loadComments);
 }
 
 function renderFullSizePicture (userPost) {
@@ -121,8 +121,8 @@ function renderFullSizePicture (userPost) {
   descriptionElement.textContent = description;
   commentsContainer = comments;
 
-  loadComments(commentsContainer);
-  onCommentsLoader(commentsContainer);
+  loadComments();
+  onCommentsLoader();
 
   onPopupEscKeyDown();
   onCancelButtonDown();
