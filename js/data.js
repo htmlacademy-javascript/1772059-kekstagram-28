@@ -58,18 +58,22 @@ function createPost () {
     url: `./photos/${countPhotos()}.jpg`,
     description: getRandomArrayElement(DESCRIPTIONS),
     likes: getRandomPositiveInteger(125, 500),
-    comments: Array.from({length: getRandomPositiveInteger(0, 6)}, createComments),
+    comments: Array.from({length: getRandomPositiveInteger(1, 20)}, createComments),
   };
 }
 
 function createComments () {
   return {
     id: countUsersID(),
-    avatar: `./img/avatar-${getRandomPositiveInteger(0, 6)}.svg`,
+    avatar: `./img/avatar-${getRandomPositiveInteger(1, 6)}.svg`,
     message: getRandomArrayElement(MESSAGES),
     name: getRandomArrayElement(NAMES),
   };
 }
+
+// function getComments () {
+//   return Array.from({length: COUNT_COMMENTS}, createComments);
+// }
 
 function getPhotoGallery () {
   return Array.from({ length: COUNT_PICTURES }, createPost);
