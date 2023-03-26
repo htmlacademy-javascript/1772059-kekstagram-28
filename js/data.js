@@ -72,9 +72,9 @@ function createComments () {
   };
 }
 
-function getComments () {
-  return Array.from({length: COUNT_COMMENTS}, createComments);
-}
+// function getComments () {
+//   return Array.from({length: COUNT_COMMENTS}, createComments);
+// }
 
 function getPhotoGallery () {
   return Array.from({ length: COUNT_PICTURES }, createPost);
