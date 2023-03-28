@@ -92,7 +92,7 @@ function loadComments () {
   } else {
     commentsLoader.classList.remove('hidden');
   }
-  
+
   const commentFragment = document.createDocumentFragment();
   for(let i = 0; i < totalNumberOfComments; i++) {
     const commentElement = createComment(commentsContainer[i]);
