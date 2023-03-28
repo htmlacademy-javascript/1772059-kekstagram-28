@@ -98,7 +98,6 @@ function loadComments () {
     const commentElement = createComment(commentsContainer[i]);
     commentFragment.append(commentElement);
   }
-
   commentsList.innerHTML = '';
   commentsList.append(commentFragment);
   socialCommentsCount.innerHTML = `
