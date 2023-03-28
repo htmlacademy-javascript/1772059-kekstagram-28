@@ -1,5 +1,8 @@
+import { resetEffects } from './effect-overlay.js';
+import { resetScale } from './scale-picture.js';
 import { isEscapeKey } from './utils.js';
-import './validator.js';
+import './validate-form.js';
+import './effect-overlay.js';
 
 const uploadPicture = document.querySelector('#upload-file');
 const pictureEditor = document.querySelector('.img-upload__overlay');
@@ -32,6 +35,10 @@ function openPictureEditor() {
 }
 
 function closePictureEditor() {
+
+  resetScale();
+  resetEffects();
+
   pictureEditor.classList.add('hidden');
   document.body.classList.remove('modal-open');
 
