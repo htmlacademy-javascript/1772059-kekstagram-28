@@ -91,6 +91,7 @@ function onChangeEffect (evt) {
   if(!evt.target.classList.contains('effects__radio')) {
     return;
   }
+
   chosenEffect = Effects.find((effect) => effect.name === evt.target.value);
   pictureElement.className = `effects__preview--${chosenEffect.name}`;
   updateSlider();
