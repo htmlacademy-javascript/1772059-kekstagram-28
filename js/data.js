@@ -1,4 +1,4 @@
-import { getRandomArrayElement, generateID, getRandomPositiveInteger } from './utils.js';
+import { getRandomArrayElement, getRandomPositiveInteger } from './utils.js';
 
 const NAMES = [
   'Dustin Chambers',
@@ -48,14 +48,13 @@ const DESCRIPTIONS = [
 ];
 
 const COUNT_PICTURES = 25;
-const countPhotosID = generateID();
-const countUsersID = generateID();
-const countPhotos = generateID();
+let photosId = 1;
+let commentId = 1;
 
 function createPost () {
   return {
-    id: countPhotosID(),
-    url: `./photos/${countPhotos()}.jpg`,
+    id: photosId,
+    url: `./photos/${photosId++}.jpg`,
     description: getRandomArrayElement(DESCRIPTIONS),
     likes: getRandomPositiveInteger(125, 500),
     comments: Array.from({length: getRandomPositiveInteger(1, 20)}, createComments),
@@ -64,19 +63,13 @@ function createPost () {
 
 function createComments () {
   return {
-    id: countUsersID(),
+    id: commentId++,
     avatar: `./img/avatar-${getRandomPositiveInteger(1, 6)}.svg`,
     message: getRandomArrayElement(MESSAGES),
     name: getRandomArrayElement(NAMES),
   };
 }
 
-// function getComments () {
-//   return Array.from({length: COUNT_COMMENTS}, createComments);
-// }
-
-function getPhotoGallery () {
-  return Array.from({ length: COUNT_PICTURES }, createPost);
-}
+const getPhotoGallery = () => Array.from({ length: COUNT_PICTURES }, createPost);
 
 export { getPhotoGallery };

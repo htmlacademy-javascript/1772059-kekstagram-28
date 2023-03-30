@@ -58,19 +58,13 @@ const sliderElement = document.querySelector('.effect-level__slider');
 const sliderContainerElement = document.querySelector('.img-upload__effect-level');
 const levelEffectElement = document.querySelector('.effect-level__value');
 
-function isDefault () {
-  return chosenEffect === DEFAULT_EFFECT;
-}
+const isDefault = () => chosenEffect === DEFAULT_EFFECT;
 
-function openSlider () {
-  sliderContainerElement.classList.remove('hidden');
-}
+const openSlider = () => sliderContainerElement.classList.remove('hidden');
 
-function closeSlider () {
-  sliderContainerElement.classList.add('hidden');
-}
+const closeSlider = () => sliderContainerElement.classList.add('hidden');
 
-function updateSlider () {
+const updateSlider = () => {
   sliderElement.noUiSlider.updateOptions({
     range: {
       min: chosenEffect.min,
@@ -85,9 +79,9 @@ function updateSlider () {
   } else {
     openSlider();
   }
-}
+};
 
-function onChangeEffect (evt) {
+const onChangeEffect = (evt) => {
   if(!evt.target.classList.contains('effects__radio')) {
     return;
   }
@@ -95,20 +89,20 @@ function onChangeEffect (evt) {
   chosenEffect = Effects.find((effect) => effect.name === evt.target.value);
   pictureElement.className = `effects__preview--${chosenEffect.name}`;
   updateSlider();
-}
+};
 
-function onSliderUpdate () {
+const onSliderUpdate = () => {
   const sliderValue = sliderElement.noUiSlider.get();
   pictureElement.style.filter = isDefault()
     ? DEFAULT_EFFECT.style
     : `${chosenEffect.style}(${sliderValue}${chosenEffect.measure})`;
   levelEffectElement.value = sliderValue;
-}
+};
 
-function resetEffects () {
+const resetEffects = () => {
   chosenEffect = DEFAULT_EFFECT;
   updateSlider();
-}
+};
 
 noUiSlider.create(sliderElement, {
   range: {
@@ -122,7 +116,10 @@ noUiSlider.create(sliderElement, {
 
 closeSlider();
 
-effectsElement.addEventListener('change', onChangeEffect);
-sliderElement.noUiSlider.on('update', onSliderUpdate);
+const initEffects = () => {
+  effectsElement.addEventListener('change', onChangeEffect);
+  sliderElement.noUiSlider.on('update', onSliderUpdate);
+};
 
-export { resetEffects };
+
+export { initEffects, resetEffects };

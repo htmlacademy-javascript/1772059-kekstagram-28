@@ -1,8 +1,7 @@
-import { resetEffects } from './effect-overlay.js';
-import { resetScale } from './scale-picture.js';
+import { initEffects, resetEffects } from './effect-overlay.js';
+import { initScale, resetScale } from './scale-picture.js';
 import { isEscapeKey } from './utils.js';
-import './validate-form.js';
-import './effect-overlay.js';
+import { initValidator, resetValidator } from './validate-form.js';
 
 const uploadPicture = document.querySelector('#upload-file');
 const pictureEditor = document.querySelector('.img-upload__overlay');
@@ -16,29 +15,31 @@ const isTextFieldFocused = () =>
   document.activeElement === hashTagField ||
   document.activeElement === commentField;
 
-function cancelButtonDownHandler() {
+const cancelButtonDownHandler = () => {
   closePictureEditor();
-}
+};
 
-function popupEscKeyDownHandler(evt) {
+const popupEscKeyDownHandler = (evt) => {
   if(isEscapeKey(evt) && !isTextFieldFocused()) {
     closePictureEditor();
   }
-}
+};
 
-function openPictureEditor() {
+const openPictureEditor = () => {
+  initValidator();
+  initScale();
+  initEffects();
   pictureEditor.classList.remove('hidden');
   document.body.classList.add('modal-open');
 
   cancelButton.addEventListener('click', cancelButtonDownHandler);
   document.addEventListener('keydown', popupEscKeyDownHandler);
-}
+};
 
-function closePictureEditor() {
-
+function closePictureEditor () {
+  resetValidator();
   resetScale();
   resetEffects();
-
   pictureEditor.classList.add('hidden');
   document.body.classList.remove('modal-open');
 
@@ -46,5 +47,6 @@ function closePictureEditor() {
   document.removeEventListener('keydown', popupEscKeyDownHandler);
 }
 
-uploadPicture.addEventListener('change', openPictureEditor);
+const initPictureEditor = () => uploadPicture.addEventListener('change', openPictureEditor);
 
+export { initPictureEditor };
