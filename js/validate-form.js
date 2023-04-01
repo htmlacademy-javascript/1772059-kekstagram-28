@@ -43,21 +43,14 @@ const validateHashtagUnique = (value) => {
   return hasUniqueSymbols(tags);
 };
 
-const initPristine = (evt) => {
-  evt.preventDefault();
-  pristine.validate();
-};
-
 const initValidator = () => {
   pristine.addValidator(hashtagField, validateHashtagsLength, ERROR_TEXT_HASHTAG_LENGTH);
   pristine.addValidator(hashtagField, validateHashtagSymbols, ERROR_TEXT_HASHTAG_INVALID_SYMBOL);
   pristine.addValidator(hashtagField, validateHashtagUnique, ERROR_TEXT_HASHTAG_NON_UNIQUE);
-
-  pictureForm.addEventListener('submit', initPristine);
 };
 
-const resetValidator = () => pictureForm.removeEventListener('submit', initPristine);
+const validateForm = () => pristine.validate();
 
-export { initValidator, resetValidator };
+export { initValidator, validateForm };
 
 

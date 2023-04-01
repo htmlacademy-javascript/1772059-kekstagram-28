@@ -1,12 +1,10 @@
 import { isEscapeKey } from './utils.js';
 
 const fullSizePicture = document.querySelector('.big-picture');
-
 const imgElement = fullSizePicture.querySelector('.big-picture__img img');
 const likesElement = fullSizePicture.querySelector('.likes-count');
 const commentsCountElement = fullSizePicture.querySelector('.comments-count');
 const descriptionElement = fullSizePicture.querySelector('.social__caption');
-const commentsFieldElement = fullSizePicture.querySelector('.social__footer-text');
 const cancelButton = fullSizePicture.querySelector('#picture-cancel');
 const commentsLoader = fullSizePicture.querySelector('.comments-loader');
 const socialCommentsCount = fullSizePicture.querySelector('.social__comment-count');
@@ -17,10 +15,8 @@ const COMMENTS_FOR_LOADER = 5;
 let totalNumberOfComments = 0;
 let comments = [];
 
-const isCommentsFieldFocused = () => document.activeElement === commentsFieldElement;
-
 const onDocumentKeyDown = (evt) => {
-  if(isEscapeKey(evt) && !isCommentsFieldFocused()) {
+  if(isEscapeKey(evt) && !evt.target.closest('.social__footer-text')) {
     evt.preventDefault();
     closeFullSizePicture();
   }
@@ -37,35 +33,31 @@ const createComment = (comment) => {
   img.src = comment.avatar;
   img.alt = comment.name;
   commentTemplate.querySelector('.social__text').textContent = comment.message;
-
   return commentTemplate;
 };
 
-const checkCommentsCount = () => {
-  totalNumberOfComments += COMMENTS_FOR_LOADER;
+const changeButtonState = () => {
   if (totalNumberOfComments >= comments.length) {
     commentsLoader.classList.add('hidden');
-    totalNumberOfComments = comments.length;
   } else {
     commentsLoader.classList.remove('hidden');
   }
 };
 
-const uploadSocialCommentsCount = (currentCount, totalCount) => {
+const uploadSocialCommentsCount = () => {
   socialCommentsCount.innerHTML = `
-    ${currentCount} из <span class="comments-count">${totalCount.length}</span> комментариев
+    ${totalNumberOfComments} из <span class="comments-count">${comments.length}</span> комментариев
   `;
 };
 
 const renderComments = () => {
-  checkCommentsCount();
-  commentsList.innerHTML = '';
-  for(let i = 0; i < totalNumberOfComments; i++) {
-    commentsList.append(createComment(comments[i]));
-  }
-  uploadSocialCommentsCount(totalNumberOfComments, comments);
+  const currentComments = comments.slice(totalNumberOfComments, totalNumberOfComments + COMMENTS_FOR_LOADER);
+  totalNumberOfComments += COMMENTS_FOR_LOADER;
+  totalNumberOfComments = Math.min(totalNumberOfComments, comments.length);
+  currentComments.forEach((comment) => commentsList.append(createComment(comment)));
+  changeButtonState();
+  uploadSocialCommentsCount();
 };
-
 
 const fillBigPicture = (data) => {
   const {url, alt, likes, description} = data;
@@ -76,16 +68,17 @@ const fillBigPicture = (data) => {
   descriptionElement.textContent = description;
 };
 
-function closeFullSizePicture () { //не всплывает при объявлении через стрелочную функцию
+function closeFullSizePicture () {
   fullSizePicture.classList.add('hidden');
   document.body.classList.remove('modal-open');
   document.removeEventListener('keydown', onDocumentKeyDown);
   cancelButton.removeEventListener('click', onCancelButtonClick);
-  commentsLoader.addEventListener('click', renderComments);
+  commentsLoader.removeEventListener('click', renderComments);
   totalNumberOfComments = 0;
 }
 
 const openFullSizePicture = (data) => {
+  commentsList.innerHTML = '';
   comments = data.comments;
   fullSizePicture.classList.remove('hidden');
   document.body.classList.add('modal-open');

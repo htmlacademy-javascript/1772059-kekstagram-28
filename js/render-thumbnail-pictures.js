@@ -1,9 +1,9 @@
 import { openFullSizePicture } from './open-full-size-picture.js';
-import { getPhotoGallery } from './data.js';
+//import { getPhotoGallery } from './data.js';
 
 const picturesGrid = document.querySelector('.pictures');
 const thumbnailTemplate = document.querySelector('#picture').content.querySelector('.picture');
-const photoData = getPhotoGallery();
+//const photoData = getPhotoGallery();
 
 const createThumbnail = (picture) => {
   const thumbnail = thumbnailTemplate.cloneNode(true);
@@ -20,6 +20,7 @@ const createThumbnail = (picture) => {
   return thumbnail;
 };
 
-const renderThumbnails = () => photoData.forEach((item) => picturesGrid.append(createThumbnail(item)));
+const renderThumbnails = (data) => data.forEach((item) => picturesGrid.append(createThumbnail(item)));
+
 
 export { renderThumbnails };
