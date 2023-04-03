@@ -4,7 +4,6 @@ const successTemplate = document.querySelector('#success').content.querySelector
 
 let errorMessageElement;
 let successMessageElement;
-let fatalErrorMessageElement;
 
 const onDocumentKeyDown = (evt) => {
   if(isEscapeKey(evt)) {
@@ -45,7 +44,7 @@ function closeSuccessMessage () {
 }
 
 const showFatalErrorMessage = () => {
-  fatalErrorMessageElement = errorTemplate.cloneNode(true);
+  const fatalErrorMessageElement = errorTemplate.cloneNode(true);
   fatalErrorMessageElement.querySelector('.error__title').textContent = 'Ошибка загрузки данных с сервера';
   fatalErrorMessageElement.querySelector('.error__button').remove();
   return fatalErrorMessageElement;
