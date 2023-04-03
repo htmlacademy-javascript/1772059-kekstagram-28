@@ -1,9 +1,12 @@
 import { openFullSizePicture } from './open-full-size-picture.js';
-//import { getPhotoGallery } from './data.js';
+import { getData } from './api.js';
+import { showFatalErrorMessage } from './send-messages.js';
+
+const GET_URL = 'https://28.javascript.pages.academy/kekstagram/data';
+const ERROR_DELAY = 5000;
 
 const picturesGrid = document.querySelector('.pictures');
 const thumbnailTemplate = document.querySelector('#picture').content.querySelector('.picture');
-//const photoData = getPhotoGallery();
 
 const createThumbnail = (picture) => {
   const thumbnail = thumbnailTemplate.cloneNode(true);
@@ -22,5 +25,18 @@ const createThumbnail = (picture) => {
 
 const renderThumbnails = (data) => data.forEach((item) => picturesGrid.append(createThumbnail(item)));
 
+const onGetSuccess = (data) => renderThumbnails(data);
 
-export { renderThumbnails };
+const onGetFail = () => {
+  const errorBlock = showFatalErrorMessage();
+  document.body.append(errorBlock);
+
+  setTimeout(() => {
+    errorBlock.remove();
+  }, ERROR_DELAY);
+};
+
+const getThumbnailsData = () => getData(GET_URL, onGetSuccess, onGetFail);
+
+
+export { getThumbnailsData };
