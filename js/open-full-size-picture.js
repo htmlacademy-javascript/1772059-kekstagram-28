@@ -1,5 +1,7 @@
 import { isEscapeKey } from './utils.js';
 
+const COMMENTS_FOR_LOADER = 5;
+
 const fullSizePicture = document.querySelector('.big-picture');
 const imgElement = fullSizePicture.querySelector('.big-picture__img img');
 const likesElement = fullSizePicture.querySelector('.likes-count');
@@ -11,7 +13,6 @@ const socialCommentsCount = fullSizePicture.querySelector('.social__comment-coun
 const commentsList = fullSizePicture.querySelector('.social__comments');
 const commentsItem = fullSizePicture.querySelector('.social__comment');
 
-const COMMENTS_FOR_LOADER = 5;
 let totalNumberOfComments = 0;
 let comments = [];
 

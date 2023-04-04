@@ -1,13 +1,20 @@
-
-const getRandomPositiveInteger = (a, b) => {
-  const lower = Math.ceil(Math.min(Math.abs(a), Math.abs(b)));
-  const upper = Math.floor(Math.max(Math.abs(a), Math.abs(b)));
-  const result = Math.random() * (upper - lower + 1) + lower;
-  return Math.floor(result);
-};
-
-const getRandomArrayElement = (elements) => elements[getRandomPositiveInteger(0, elements.length - 1)];
-
 const isEscapeKey = (evt) => evt.key === 'Escape';
 
-export {getRandomArrayElement, getRandomPositiveInteger, isEscapeKey};
+const shuffleArray = (array) => {
+  for(let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    const temp = array[i];
+    array[i] = array[j];
+    array[j] = temp;
+  }
+  return array;
+};
+const debounce = (cb, timeOutDelay) => {
+  let timeOutId;
+
+  return (...rest) => {
+    clearTimeout(timeOutId);
+    timeOutId = setTimeout(() => cb.apply(this, rest), timeOutDelay);
+  };
+};
+export { isEscapeKey, shuffleArray, debounce };

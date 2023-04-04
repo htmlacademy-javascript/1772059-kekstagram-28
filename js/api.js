@@ -15,8 +15,8 @@ const sendData = (url, onSuccess, onFail, body) => {
     method: 'POST',
     body,
   })
-    .then((respose) => {
-      if(respose.ok) {
+    .then((response) => {
+      if(response.ok) {
         onSuccess();
       } else {
         onFail();

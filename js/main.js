@@ -1,5 +1,5 @@
 import { getThumbnailsData } from './render-thumbnail-pictures.js';
-import { initPictureEditor } from './uploding-picture.js';
+import { initPictureEditor } from './uploading-picture.js';
 
 initPictureEditor();
 getThumbnailsData();

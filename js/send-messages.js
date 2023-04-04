@@ -1,4 +1,5 @@
 import { isEscapeKey } from './utils.js';
+
 const errorTemplate = document.querySelector('#error').content.querySelector('.error');
 const successTemplate = document.querySelector('#success').content.querySelector('.success');
 
@@ -8,9 +9,10 @@ let successMessageElement;
 const onDocumentKeyDown = (evt) => {
   if(isEscapeKey(evt)) {
     evt.preventDefault();
-  }
-  if (evt.target.closest(successMessageElement)) {
-    closeSuccessMessage();
+    if (successMessageElement) {
+      closeSuccessMessage();
+      return;
+    }
   }
   closeErrorMessage();
 };
@@ -18,11 +20,23 @@ const onDocumentKeyDown = (evt) => {
 const onErrorMessageClick = () => closeErrorMessage();
 const onSuccessMessageClick = () => closeSuccessMessage();
 
+const onErrorClick = (evt) => {
+  if(!evt.target.closest('.error__inner')) {
+    closeErrorMessage();
+  }
+};
+
+const onSuccessClick = (evt) => {
+  if(!evt.target.closest('.success__inner')) {
+    closeSuccessMessage();
+  }
+};
 
 const showErrorMessage = () => {
   errorMessageElement = errorTemplate.cloneNode(true);
   document.body.append(errorMessageElement);
   errorMessageElement.querySelector('.error__button').addEventListener('click', onErrorMessageClick);
+  errorMessageElement.addEventListener('click', onErrorClick);
   document.addEventListener('keydown', onDocumentKeyDown);
 };
 
@@ -30,6 +44,7 @@ const showSuccessMessage = () => {
   successMessageElement = successTemplate.cloneNode(true);
   document.body.append(successMessageElement);
   successMessageElement.querySelector('.success__button').addEventListener('click', onSuccessMessageClick);
+  successMessageElement.addEventListener('click', onSuccessClick);
   document.addEventListener('keydown', onDocumentKeyDown);
 };
 
@@ -43,13 +58,5 @@ function closeSuccessMessage () {
   document.removeEventListener('keydown', onDocumentKeyDown);
 }
 
-const showFatalErrorMessage = () => {
-  const fatalErrorMessageElement = errorTemplate.cloneNode(true);
-  fatalErrorMessageElement.querySelector('.error__title').textContent = 'Ошибка загрузки данных с сервера';
-  fatalErrorMessageElement.querySelector('.error__button').remove();
-  return fatalErrorMessageElement;
-};
-
-
-export {showErrorMessage, showSuccessMessage, showFatalErrorMessage};
+export {showErrorMessage, showSuccessMessage};
 
