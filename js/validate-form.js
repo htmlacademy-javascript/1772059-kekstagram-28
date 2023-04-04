@@ -14,45 +14,43 @@ const pristine = new Pristine(pictureForm, {
   errorTextClass: 'img-upload__field-wrapper',
 });
 
-pristine.addValidator(hashtagField, validateHashtagsLength, ERROR_TEXT_HASHTAG_LENGTH);
-pristine.addValidator(hashtagField, validateHashtagSymbols, ERROR_TEXT_HASHTAG_INVALID_SYMBOL);
-pristine.addValidator(hashtagField, validateHashtagUnique, ERROR_TEXT_HASHTAG_NON_UNIQUE);
-
-function filteredHashtag(value) {
+const filteredHashtag = (value) => {
   const tags = value.trim().split(' ').filter((tag) => tag.trim().length);
   return tags;
-}
+};
 
-function hasValidatedHashtagLength (tags) {
-  return tags.length <= MAX_COUNT_HASHTAG;
-}
+const hasValidatedHashtagLength = (tags) => tags.length <= MAX_COUNT_HASHTAG;
 
 function hasUniqueSymbols (tags) {
   const lowerCaseTags = tags.map((tag) => tag.toLowerCase());
   return lowerCaseTags.length === new Set(lowerCaseTags).size;
 }
 
-function isValidHashtag (tag) {
-  return VALID_SYMBOLS.test(tag);
-}
+const isValidHashtag = (tag) => VALID_SYMBOLS.test(tag);
 
-function validateHashtagsLength (value) {
+const validateHashtagsLength = (value) => {
   const tags = filteredHashtag(value);
   return hasValidatedHashtagLength(tags);
-}
+};
 
-function validateHashtagSymbols (value) {
+const validateHashtagSymbols = (value) => {
   const tags = filteredHashtag(value);
   return tags.every(isValidHashtag);
-}
+};
 
-function validateHashtagUnique (value) {
+const validateHashtagUnique = (value) => {
   const tags = filteredHashtag(value);
   return hasUniqueSymbols(tags);
-}
+};
 
-pictureForm.addEventListener('submit', (evt) => {
-  evt.preventDefault();
-  pristine.validate();
-});
+const initValidator = () => {
+  pristine.addValidator(hashtagField, validateHashtagsLength, ERROR_TEXT_HASHTAG_LENGTH);
+  pristine.addValidator(hashtagField, validateHashtagSymbols, ERROR_TEXT_HASHTAG_INVALID_SYMBOL);
+  pristine.addValidator(hashtagField, validateHashtagUnique, ERROR_TEXT_HASHTAG_NON_UNIQUE);
+};
+
+const validateForm = () => pristine.validate();
+
+export { initValidator, validateForm };
+
 

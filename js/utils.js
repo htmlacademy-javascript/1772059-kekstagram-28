@@ -1,23 +1,13 @@
 
-function getRandomPositiveInteger(a, b) {
+const getRandomPositiveInteger = (a, b) => {
   const lower = Math.ceil(Math.min(Math.abs(a), Math.abs(b)));
   const upper = Math.floor(Math.max(Math.abs(a), Math.abs(b)));
   const result = Math.random() * (upper - lower + 1) + lower;
   return Math.floor(result);
-}
+};
 
-function getRandomArrayElement(elements) {
-  return elements[getRandomPositiveInteger(0, elements.length - 1)];
-}
-
-function generateID () {
-  let counter = 0;
-  return function () {
-    ++counter;
-    return counter;
-  };
-}
+const getRandomArrayElement = (elements) => elements[getRandomPositiveInteger(0, elements.length - 1)];
 
 const isEscapeKey = (evt) => evt.key === 'Escape';
 
-export {getRandomArrayElement, generateID, getRandomPositiveInteger, isEscapeKey};
+export {getRandomArrayElement, getRandomPositiveInteger, isEscapeKey};

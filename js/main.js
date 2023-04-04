@@ -1,6 +1,5 @@
+import { getThumbnailsData } from './render-thumbnail-pictures.js';
+import { initPictureEditor } from './uploding-picture.js';
 
-import { getPhotoGallery } from './data.js';
-import { renderPhotoGallery } from './render-photo-gallery.js';
-import './uploding-picture.js';
-
-renderPhotoGallery(getPhotoGallery());
+initPictureEditor();
+getThumbnailsData();

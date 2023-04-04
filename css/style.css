@@ -1408,3 +1408,16 @@ main {
 .hidden {
   display: none;
 }
+
+.error-block {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  text-align: center;
+  background-color: #232321;
+  padding: 20px 50px;
+  font-size: 32px;
+  color: red;
+}
+
