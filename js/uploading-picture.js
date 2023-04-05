@@ -4,6 +4,7 @@ import { isEscapeKey } from './utils.js';
 import { initValidator, validateForm } from './validate-form.js';
 import { sendData } from './api.js';
 import { showErrorMessage, showSuccessMessage } from './send-messages.js';
+import { loadPicture } from './loading-picture.js';
 
 const SEND_URL = 'https://28.javascript.pages.academy/kekstagram';
 const BLOCKED_BUTTON_TEXT = 'Публикую...';
@@ -54,11 +55,14 @@ const onPictureFormSubmit = (evt) => {
   }
 };
 
-const openPictureEditor = () => {
-  pictureEditor.classList.remove('hidden');
-  document.body.classList.add('modal-open');
-  cancelButton.addEventListener('click', onCancelButtonDown);
-  document.addEventListener('keydown', onPopupEscKeyDown);
+const onUploadPictureChange = (evt) => {
+  const loadState = loadPicture(evt);
+  if (loadState) {
+    pictureEditor.classList.remove('hidden');
+    document.body.classList.add('modal-open');
+    cancelButton.addEventListener('click', onCancelButtonDown);
+    document.addEventListener('keydown', onPopupEscKeyDown);
+  }
 };
 
 function closePictureEditor () {
@@ -75,7 +79,7 @@ const initPictureEditor = () => {
   initValidator();
   initScale();
   initEffects();
-  uploadPicture.addEventListener('change', openPictureEditor);
+  uploadPicture.addEventListener('change', onUploadPictureChange);
   pictureForm.addEventListener('submit', onPictureFormSubmit);
 };
 

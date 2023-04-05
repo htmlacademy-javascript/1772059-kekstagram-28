@@ -78,8 +78,9 @@ const updateSlider = () => {
   });
   if(isDefault()) {
     closeSlider();
+    return;
   }
-  return openSlider();
+  openSlider();
 };
 
 const onChangeEffect = (evt) => {

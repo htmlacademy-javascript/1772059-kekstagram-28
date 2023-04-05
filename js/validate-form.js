@@ -1,4 +1,3 @@
-
 const MAX_COUNT_HASHTAG = 5;
 const VALID_SYMBOLS = /^#[a-zа-яё0-9]{1,19}$/i;
 const ERROR_TEXT_HASHTAG_LENGTH = 'Превышено количество хэштегов или общая длина';
