@@ -56,11 +56,13 @@ const onPictureFormSubmit = (evt) => {
 };
 
 const onUploadPictureChange = (evt) => {
-  loadPicture(evt);
-  pictureEditor.classList.remove('hidden');
-  document.body.classList.add('modal-open');
-  cancelButton.addEventListener('click', onCancelButtonDown);
-  document.addEventListener('keydown', onPopupEscKeyDown);
+  const loadState = loadPicture(evt);
+  if (loadState) {
+    pictureEditor.classList.remove('hidden');
+    document.body.classList.add('modal-open');
+    cancelButton.addEventListener('click', onCancelButtonDown);
+    document.addEventListener('keydown', onPopupEscKeyDown);
+  }
 };
 
 function closePictureEditor () {

@@ -10,11 +10,14 @@ const loadPicture = (evt) => {
   const matches = FILE_TYPES.some((it) => fileName.endsWith(it));
 
   if (matches) {
-    preview.src = URL.createObjectURL(file);
+    const url = URL.createObjectURL(file);
+    preview.src = url;
     for(let i = 0; i < filtersPreview.length; ++i) {
-      filtersPreview[i].style.backgroundImage = `url("${ preview }")`;
+      filtersPreview[i].style.backgroundImage = `url("${ url }")`;
     }
+    return true;
   }
+  return false;
 };
 
 export { loadPicture };
