@@ -24,7 +24,8 @@ const isTextFieldFocused = () =>
 const onCancelButtonDown = () => closePictureEditor();
 
 const onPopupEscKeyDown = (evt) => {
-  if(isEscapeKey(evt) && !isTextFieldFocused()) {
+  if(isEscapeKey(evt) && !isTextFieldFocused() && !document.querySelector('.error')) {
+    evt.preventDefault();
     closePictureEditor();
   }
 };
@@ -66,7 +67,6 @@ function closePictureEditor () {
   resetEffects();
   pictureEditor.classList.add('hidden');
   document.body.classList.remove('modal-open');
-
   cancelButton.removeEventListener('click', onCancelButtonDown);
   document.removeEventListener('keydown', onPopupEscKeyDown);
 }

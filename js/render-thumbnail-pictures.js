@@ -1,11 +1,10 @@
 import { openFullSizePicture } from './open-full-size-picture.js';
 import { getData } from './api.js';
-import { showFatalErrorMessage } from './send-messages.js';
+import { showFatalErrorMessage } from './get-message.js';
 import { initFilters } from './filtration.js';
 
 
 const GET_URL = 'https://28.javascript.pages.academy/kekstagram/data';
-const ERROR_DELAY = 5000;
 
 const picturesGrid = document.querySelector('.pictures');
 const thumbnailTemplate = document.querySelector('#picture').content.querySelector('.picture');
@@ -22,23 +21,17 @@ const createThumbnail = (picture) => {
     evt.preventDefault();
     openFullSizePicture(picture);
   });
-  initFilters();
   return thumbnail;
-
 };
 
 const renderThumbnails = (data) => data.forEach((item) => picturesGrid.append(createThumbnail(item)));
 
-const onGetSuccess = (data) => renderThumbnails(data);
-
-const onGetFail = () => {
-  const errorBlock = showFatalErrorMessage();
-  document.body.append(errorBlock);
-
-  setTimeout(() => {
-    errorBlock.remove();
-  }, ERROR_DELAY);
+const onGetSuccess = (data) => {
+  renderThumbnails(data);
+  initFilters(data);
 };
+
+const onGetFail = () => showFatalErrorMessage();
 
 const getThumbnailsData = () => getData(GET_URL, onGetSuccess, onGetFail);
 
