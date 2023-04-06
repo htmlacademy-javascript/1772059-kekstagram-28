@@ -8,7 +8,7 @@ import { loadPicture } from './loading-picture.js';
 
 const SEND_URL = 'https://28.javascript.pages.academy/kekstagram';
 const BLOCKED_BUTTON_TEXT = 'Публикую...';
-const UNBLOCKED_BUTTON_TEXT = 'Опубликовано';
+const DEFAULT_BUTTON_TEXT = 'Опубликовать';
 
 const uploadPicture = document.querySelector('#upload-file');
 const pictureEditor = document.querySelector('.img-upload__overlay');
@@ -39,12 +39,12 @@ const changeButtonState = (state, content) => {
 const onSendSuccess = () => {
   closePictureEditor();
   showSuccessMessage();
-  changeButtonState(false, UNBLOCKED_BUTTON_TEXT);
+  changeButtonState(false, DEFAULT_BUTTON_TEXT);
 };
 
 const onSendFail = () => {
   showErrorMessage();
-  changeButtonState(false, UNBLOCKED_BUTTON_TEXT);
+  changeButtonState(false, DEFAULT_BUTTON_TEXT);
 };
 
 const onPictureFormSubmit = (evt) => {

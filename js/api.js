@@ -1,4 +1,3 @@
-
 const getData = (url, onSuccess, onFail) => {
   fetch(url)
     .then((response) => response.json())
