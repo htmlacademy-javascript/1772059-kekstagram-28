@@ -25,7 +25,7 @@ const isTextFieldFocused = () =>
 const onCancelButtonDown = () => closePictureEditor();
 
 const onPopupEscKeyDown = (evt) => {
-  if(isEscapeKey(evt) && !isTextFieldFocused() && !document.querySelector('.error')) {
+  if(isEscapeKey(evt) && !isTextFieldFocused() && !document.querySelector('.error__inner')) {
     evt.preventDefault();
     closePictureEditor();
   }
@@ -57,12 +57,13 @@ const onPictureFormSubmit = (evt) => {
 
 const onUploadPictureChange = (evt) => {
   const loadState = loadPicture(evt);
-  if (loadState) {
-    pictureEditor.classList.remove('hidden');
-    document.body.classList.add('modal-open');
-    cancelButton.addEventListener('click', onCancelButtonDown);
-    document.addEventListener('keydown', onPopupEscKeyDown);
+  if (!loadState) {
+    return;
   }
+  pictureEditor.classList.remove('hidden');
+  document.body.classList.add('modal-open');
+  cancelButton.addEventListener('click', onCancelButtonDown);
+  document.addEventListener('keydown', onPopupEscKeyDown);
 };
 
 function closePictureEditor () {

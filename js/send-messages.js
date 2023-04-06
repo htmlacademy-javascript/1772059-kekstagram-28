@@ -13,8 +13,8 @@ const onDocumentKeyDown = (evt) => {
       closeSuccessMessage();
       return;
     }
+    closeErrorMessage();
   }
-  closeErrorMessage();
 };
 
 const onErrorMessageClick = () => closeErrorMessage();
@@ -51,12 +51,13 @@ const showSuccessMessage = () => {
 function closeErrorMessage () {
   errorMessageElement.remove();
   document.removeEventListener('keydown', onDocumentKeyDown);
+  errorMessageElement = '';
 }
 
 function closeSuccessMessage () {
   successMessageElement.remove();
   document.removeEventListener('keydown', onDocumentKeyDown);
+  successMessageElement = '';
 }
 
 export {showErrorMessage, showSuccessMessage};
-
