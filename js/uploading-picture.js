@@ -6,7 +6,7 @@ import { sendData } from './api.js';
 import { showErrorMessage, showSuccessMessage } from './send-messages.js';
 import { loadPicture } from './loading-picture.js';
 
-const SEND_URL = 'https://28.javascript.pages.academy/kekstagram1';
+const SEND_URL = 'https://28.javascript.pages.academy/kekstagram';
 const BLOCKED_BUTTON_TEXT = 'Публикую...';
 const DEFAULT_BUTTON_TEXT = 'Опубликовать';
 
